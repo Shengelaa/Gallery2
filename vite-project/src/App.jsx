@@ -4,20 +4,27 @@ import { useState } from "react";
 
 function App() {
   const [filter, setFilter] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleFilterClick = (category) => {
     setFilter(category);
-    console.log(category);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   const filteredData = data.filter((item) => {
+    const categoryMatches =
+      filter === "All" || item.category.toLowerCase() === filter.toLowerCase();
 
-    if (filter === "All") {
-      return true;
-    }
- 
-    return item.category.toLowerCase() === filter.toLowerCase();
+    const searchMatches = item.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()); 
+
+      
+
+    return categoryMatches && searchMatches;
   });
 
   return (
@@ -28,8 +35,11 @@ function App() {
           className='input'
           placeholder='Search Bar'
           id='searchBar'
+          value={searchTerm}
+          onChange={handleSearchChange}
         />
       </div>
+
       <div className='buttonsDiv'>
         <button className='buttons' onClick={() => handleFilterClick("Cat")}>
           Cats
@@ -46,6 +56,7 @@ function App() {
           All
         </button>
       </div>
+
       <div className='mainDiv'>
         {filteredData.map((item) => (
           <div className='card' key={`${item.title}-${item.category}`}>
