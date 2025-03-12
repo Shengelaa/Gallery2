@@ -5,25 +5,36 @@ import { useState } from "react";
 function App() {
   const [filter, setFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLightboxVisible, setIsLightboxVisible] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState("");
 
   const handleFilterClick = (category) => {
     setFilter(category);
   };
 
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+
+  const handleImageClick = (image_url) => {
+    setLightboxImage(image_url);
+    setIsLightboxVisible(true);
+  };
+
+
+  const closeLightbox = () => {
+    setIsLightboxVisible(false);
+  };
+
+
   const filteredData = data.filter((item) => {
     const categoryMatches =
       filter === "All" || item.category.toLowerCase() === filter.toLowerCase();
-
     const searchMatches = item.title
       .toLowerCase()
-      .includes(searchTerm.toLowerCase()); 
-
-      
-
+      .includes(searchTerm.toLowerCase());
     return categoryMatches && searchMatches;
   });
 
@@ -60,7 +71,11 @@ function App() {
       <div className='mainDiv'>
         {filteredData.map((item) => (
           <div className='card' key={`${item.title}-${item.category}`}>
-            <img src={item.image_url} alt={item.title} />
+            <img
+              src={item.image_url}
+              alt={item.title}
+              onClick={() => handleImageClick(item.image_url)}
+            />
             <h3>{item.title}</h3>
             <p>{item.category}</p>
             <a href={item.desc} target='_blank' rel='noopener noreferrer'>
@@ -69,6 +84,18 @@ function App() {
           </div>
         ))}
       </div>
+
+
+      {isLightboxVisible && (
+        <div className='overlay' onClick={closeLightbox}>
+          <img
+            src={lightboxImage}
+            alt='Full view'
+            className='full-image'
+            onClick={(e) => e.stopPropagation()} 
+          />
+        </div>
+      )}
     </>
   );
 }

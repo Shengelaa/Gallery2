@@ -13,13 +13,12 @@ html {
   background-color: white;
 }
 
-
 .mainDiv {
   display: grid;
   width: 100%;
-  height: 100%; 
+  height: 100%;
   justify-items: center;
-  align-items: center; 
+  align-items: center;
   gap: 20px;
   padding: 20px;
 }
@@ -54,7 +53,7 @@ html {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   margin: 10px;
   width: 100%;
-  max-width: 300px; 
+  max-width: 300px;
 }
 
 .card h3 {
@@ -76,6 +75,7 @@ html {
   max-width: 200px;
   height: auto;
   border-radius: 5px;
+  cursor: pointer;
 }
 .buttonsDiv {
   position: fixed;
@@ -93,13 +93,13 @@ html {
   border-radius: 9px;
 }
 
-.thumbnail {
+img {
   width: 150px;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
-.thumbnail:hover {
+img:hover {
   transform: scale(1.05);
 }
 
@@ -119,6 +119,8 @@ html {
 .full-image {
   max-width: 90%;
   max-height: 90%;
+  min-width: 400px;
+  height: auto;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
